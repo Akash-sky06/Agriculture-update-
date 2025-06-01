@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url(01-the-history-of-agriculture-873x350.webp);
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="password"], button {
+      width: 95%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+    .link {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .link a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Account</h2>
+
+    <label for="new-username">Username:</label>
+    <input type="text" id="new-username" placeholder="Enter your username" />
+
+    <label for="new-password">Password:</label>
+    <input type="password" id="new-password" placeholder="Create a password" />
+
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" id="confirm-password" placeholder="Confirm your password" />
+
+    <label for="security-answer">What is your favorite color or place?</label>
+    <input type="text" id="security-answer" placeholder="Enter your answer" />
+
+    <button onclick="register()">Create Account</button>
+
+    <div class="link">
+      <p>Already have an account? <a href="index.html">Login here</a></p>
+    </div>
+  </div>
+
+  <script>
+    function register() {
+      const username = document.getElementById("new-username").value.trim();
+      const password = document.getElementById("new-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      const securityAnswer = document.getElementById("security-answer").value.trim();
+
+      if (!username || !password || !confirmPassword || !securityAnswer) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const existingUser = users.find(user => user.username === username);
+
+      if (existingUser) {
+        alert("Username already exists. Please choose a different one.");
+        return;
+      }
+
+      // Store new user with security answer
+      users.push({ username, password, securityAnswer });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Account created successfully!");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
